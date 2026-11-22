@@ -22,3 +22,6 @@ services:
   - type: keyvalue
     name: deltax5-rate-limits
     plan: free
+    ipAllowList:
+      - source: 0.0.0.0/0
+        description: Allow the DELTAX5 web service to reach rate limit storage
