@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-hero page-hero--contact">
+  <div class="section-kicker"><span>04</span><span class="section-kicker__line"></span><span>Contact</span></div>
+  <div class="page-hero__grid"><h1>Bring us<br><em>the brief.</em></h1><p>Tell us what you’re making, what you need and when you’re aiming to launch. We’ll take it from there.</p></div>
+</section>
+<section class="contact-page section-pad section-pad--topline">
+  <div class="contact-details">
+    <div class="section-kicker"><span>01</span><span class="section-kicker__line"></span><span>Direct contact</span></div>
+    <p class="contact-details__lead">Prefer a direct line?<br>Choose what works for you.</p>
+    <a class="contact-detail-link magnetic" href="mailto:{{ brand_email }}"><span class="eyebrow">Email</span><strong>{{ brand_email }}</strong><span aria-hidden="true">↗</span></a>
+    <a class="contact-detail-link magnetic" href="tel:{{ brand_phone_e164 }}"><span class="eyebrow">Telephone</span><strong>{{ brand_phone_display }}</strong><span aria-hidden="true">↗</span></a>
+    <a class="contact-detail-link magnetic" href="{{ whatsapp_url }}" target="_blank" rel="noopener noreferrer"><span class="eyebrow">WhatsApp</span><strong>Message DELTAX5</strong><span aria-hidden="true">↗</span></a>
+    <div class="contact-details__note"><span class="status-dot" aria-hidden="true"></span><span>Project enquiries are welcome.</span></div>
+  </div>
+  <div class="contact-form-wrap">
+    <div class="section-kicker"><span>02</span><span class="section-kicker__line"></span><span>Project enquiry</span></div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}<div class="form-notice form-notice--{{ category }}" role="status">{{ message }}</div>{% endfor %}
+    {% endwith %}
+    {% if delivery_error %}<div class="form-notice form-notice--error" role="alert">{{ delivery_error }}</div>{% endif %}
+    <form class="contact-form" method="post" action="{{ url_for('contact.contact') }}">
+      {{ form.hidden_tag() }}
+      <div class="form-field form-field--trap" aria-hidden="true">{{ form.website(autocomplete="off", tabindex="-1") }}<label for="{{ form.website.id }}">Leave this field empty</label></div>
+      <div class="form-field">
+        {{ form.name.label }}
+        {{ form.name(autocomplete="name", placeholder="Name", required=true, minlength="2", maxlength="100", aria_describedby="name-errors") }}
+        {% if form.name.errors %}<ul class="field-errors" id="name-errors">{% for error in form.name.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+      </div>
+      <div class="form-field">
+        {{ form.email.label }}
+        {{ form.email(autocomplete="email", placeholder="you@example.com", required=true, maxlength="254", aria_describedby="email-errors") }}
+        {% if form.email.errors %}<ul class="field-errors" id="email-errors">{% for error in form.email.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+      </div>
+      <div class="form-field">
+        {{ form.service.label }}
+        {{ form.service(required=true, aria_describedby="service-errors") }}
+        {% if form.service.errors %}<ul class="field-errors" id="service-errors">{% for error in form.service.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+      </div>
+      <div class="form-field">
+        {{ form.description.label }}
+        {{ form.description(placeholder="What are you making? What should the finished work do?", rows="5", required=true, minlength="20", maxlength="5000", aria_describedby="description-errors") }}
+        <span class="field-hint">20–5,000 characters</span>
+        {% if form.description.errors %}<ul class="field-errors" id="description-errors">{% for error in form.description.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          {{ form.budget.label }}
+          {{ form.budget(placeholder="Optional", maxlength="80") }}
+          {% if form.budget.errors %}<ul class="field-errors">{% for error in form.budget.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+        </div>
+        <div class="form-field">
+          {{ form.deadline.label }}
+          {{ form.deadline(placeholder="Optional", maxlength="120") }}
+          {% if form.deadline.errors %}<ul class="field-errors">{% for error in form.deadline.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+        </div>
+      </div>
+      <p class="form-privacy">Your details are used to respond to this enquiry. The site does not retain submitted messages.</p>
+      <button class="button button--light magnetic form-submit" type="submit">Send project enquiry <span aria-hidden="true">↗</span></button>
+    </form>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-hero page-hero--about">
+  <div class="section-kicker"><span>03</span><span class="section-kicker__line"></span><span>About the studio</span></div>
+  <div class="page-hero__grid"><h1>Ideas deserve<br><em>intention.</em></h1><p>DELTAX5 is an independent creative identity built around the belief that clear thinking and expressive craft can make digital work feel different.</p></div>
+</section>
+<section class="about-statement section-pad section-pad--topline">
+  <div class="section-kicker"><span>01</span><span class="section-kicker__line"></span><span>The point of view</span></div>
+  <div class="about-statement__body reveal"><p class="about-statement__large">Create beyond the ordinary.</p><div><p>That means looking closely at the rhythm, image and small decisions that give a piece its character. Video editing, visual design and digital production belong to one connected creative practice.</p><p>The aim is simple: make work that feels considered, communicates clearly and leaves a strong impression.</p></div></div>
+</section>
+<section class="approach section-pad">
+  <div class="section-kicker"><span>02</span><span class="section-kicker__line"></span><span>How a brief takes shape</span></div>
+  <div class="approach-grid">
+    <article class="approach-step"><span>01 / Listen</span><h2>Understand<br>the brief.</h2><p>Start with the goal, audience, source material and practical constraints.</p></article>
+    <article class="approach-step"><span>02 / Shape</span><h2>Find the<br>visual direction.</h2><p>Agree the scope and the creative choices that will carry the idea.</p></article>
+    <article class="approach-step"><span>03 / Make</span><h2>Build with<br>care.</h2><p>Develop the edit or design, share a review export, and refine the details.</p></article>
+    <article class="approach-step"><span>04 / Deliver</span><h2>Finish for<br>real use.</h2><p>Prepare agreed final files for the channels and formats in the brief.</p></article>
+  </div>
+</section>
+<section class="about-capabilities section-pad section-pad--topline">
+  <div><div class="section-kicker"><span>03</span><span class="section-kicker__line"></span><span>Tools & capabilities</span></div><h2>Creative instinct.<br><em>Technical curiosity.</em></h2></div>
+  <div class="capability-list"><p><span>Current services</span><strong>CapCut video editing · Canva graphic design · social content</strong></p><p><span>In development</span><strong>Cinematic storytelling · motion graphics · visual effects · HTML, CSS, JavaScript · Python, Flask</strong></p></div>
+</section>
+<section class="contact-band contact-band--short"><div class="contact-band__content reveal"><p class="eyebrow eyebrow--accent">A good idea starts somewhere</p><h2>Let’s talk<br><em>about yours.</em></h2><a class="button button--light magnetic" href="{{ url_for('contact.contact') }}">Get in touch <span aria-hidden="true">↗</span></a></div><span class="contact-band__side" aria-hidden="true">DELTAX5 / CREATE BEYOND THE ORDINARY</span></section>
+{% endblock %}

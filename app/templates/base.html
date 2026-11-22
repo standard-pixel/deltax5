@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090b0d">
+  <meta name="description" content="{{ description|default('An independent creative identity for video editing, visual design and digital creative production.') }}">
+  <link rel="canonical" href="{{ site_url }}{{ request.path }}">
+  <link rel="icon" href="{{ url_for('static', filename='images/favicon.svg') }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="DELTAX5">
+  <meta property="og:title" content="{{ title|default('DELTAX5 — Create beyond the ordinary') }}">
+  <meta property="og:description" content="{{ description|default('An independent creative identity for video editing, visual design and digital creative production.') }}">
+  <meta property="og:url" content="{{ site_url }}{{ request.path }}">
+  <meta property="og:image" content="{{ site_url }}{{ url_for('static', filename='images/og-image.svg') }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ title|default('DELTAX5 — Create beyond the ordinary') }}">
+  <meta name="twitter:description" content="{{ description|default('An independent creative identity for video editing, visual design and digital creative production.') }}">
+  <title>{{ title|default('DELTAX5 — Create beyond the ordinary') }}</title>
+  <script type="application/ld+json" nonce="{{ csp_nonce }}">{{ structured_data|tojson }}</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header" data-header>
+    <a class="wordmark" href="{{ url_for('pages.home') }}" aria-label="DELTAX5 home">
+      <span class="wordmark__name">DELTAX<span>5</span></span>
+      <span class="wordmark__rule" aria-hidden="true"></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" data-menu-toggle>
+      <span class="menu-toggle__label">Menu</span>
+      <span class="menu-toggle__icon" aria-hidden="true"><i></i><i></i></span>
+    </button>
+    <nav class="primary-nav" id="primary-nav" aria-label="Primary navigation" data-primary-nav>
+      <a href="{{ url_for('pages.work') }}" {% if request.endpoint in ['pages.work', 'pages.project_detail'] %}aria-current="page"{% endif %}>Work</a>
+      <a href="{{ url_for('pages.services') }}" {% if request.endpoint == 'pages.services' %}aria-current="page"{% endif %}>Services</a>
+      <a href="{{ url_for('pages.about') }}" {% if request.endpoint == 'pages.about' %}aria-current="page"{% endif %}>About</a>
+      <a class="nav-contact magnetic" href="{{ url_for('contact.contact') }}" {% if request.endpoint == 'contact.contact' %}aria-current="page"{% endif %}>Start a project <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+
+  <main id="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-top">
+      <a class="wordmark wordmark--footer" href="{{ url_for('pages.home') }}" aria-label="DELTAX5 home">
+        <span class="wordmark__name">DELTAX<span>5</span></span>
+        <span class="wordmark__rule" aria-hidden="true"></span>
+      </a>
+      <p class="footer-thought">Create beyond<br>the ordinary<span>.</span></p>
+      <div class="footer-contact">
+        <span class="eyebrow">Start a conversation</span>
+        <a href="mailto:{{ brand_email }}">{{ brand_email }}</a>
+        <a href="tel:{{ brand_phone_e164 }}">{{ brand_phone_display }}</a>
+        <a href="{{ whatsapp_url }}" target="_blank" rel="noopener noreferrer">WhatsApp <span aria-hidden="true">↗</span></a>
+      </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <span class="eyebrow">Explore</span>
+        <a href="{{ url_for('pages.work') }}">Work</a>
+        <a href="{{ url_for('pages.services') }}">Services</a>
+        <a href="{{ url_for('pages.about') }}">About</a>
+        <a href="{{ url_for('contact.contact') }}">Contact</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>© {{ current_year }} DELTAX5</span>
+      <span>Independent creative studio</span>
+      <a href="#main">Back to top ↑</a>
+    </div>
+  </footer>
+  <script src="{{ url_for('static', filename='js/site.js') }}" defer></script>
+</body>
+</html>

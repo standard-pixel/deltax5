@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<article class="project-detail">
+  <header class="project-detail__head section-pad">
+    <a class="back-link" href="{{ url_for('pages.work') }}">← Back to work</a>
+    <p class="eyebrow eyebrow--accent">{{ project.category }}{% if project.year %} / {{ project.year }}{% endif %}</p>
+    <h1>{{ project.title }}</h1>
+    <p class="project-detail__summary">{{ project.summary }}</p>
+  </header>
+  <div class="project-detail__media">
+    {% if project.youtube_id %}
+      <div class="video-frame" data-video-frame data-video-id="{{ project.youtube_id }}">
+        <img src="https://i.ytimg.com/vi/{{ project.youtube_id }}/maxresdefault.jpg" alt="{{ project.alt_text }}" loading="lazy">
+        <button class="video-play" type="button" aria-label="Play {{ project.title }} video">Play <span aria-hidden="true">▶</span></button>
+      </div>
+    {% elif project.poster %}
+      <img src="{{ url_for('static', filename=project.poster) }}" alt="{{ project.alt_text }}" loading="eager" decoding="async">
+    {% endif %}
+  </div>
+  <div class="project-detail__body section-pad">
+    <div><span class="eyebrow">The project</span><h2>{{ project.title }}</h2></div>
+    <div class="project-detail__copy">
+      <p>{{ project.description }}</p>
+      {% if project.contribution %}<p><span class="eyebrow">Contribution</span><br>{{ project.contribution }}</p>{% endif %}
+      {% if project.tools %}<p><span class="eyebrow">Tools</span><br>{{ project.tools|join(' · ') }}</p>{% endif %}
+    </div>
+  </div>
+  <section class="detail-cta"><p class="eyebrow eyebrow--accent">Have a brief of your own?</p><h2>Let’s shape<br><em>what’s next.</em></h2><a class="button button--light magnetic" href="{{ url_for('contact.contact') }}">Start a project <span aria-hidden="true">↗</span></a></section>
+</article>
+{% endblock %}

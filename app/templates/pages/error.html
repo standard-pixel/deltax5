@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="error-page section-pad">
+  <p class="eyebrow eyebrow--accent">DELTAX5 / {{ code }}</p>
+  <h1>{{ code }}<br><em>That’s a pause.</em></h1>
+  <p>{{ message }}</p>
+  <div class="hero__actions"><a class="button button--light" href="{{ url_for('pages.home') }}">Back to home <span aria-hidden="true">↗</span></a><a class="text-link" href="{{ url_for('contact.contact') }}">Contact DELTAX5</a></div>
+</section>
+{% endblock %}
