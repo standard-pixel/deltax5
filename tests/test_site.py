@@ -150,8 +150,12 @@ def test_3d_and_magnetic_effects_have_fallbacks(client):
     assert 'data-topography-canvas' in home
     assert 'data-3d-reveal' in home
     assert 'data-tilt="2"' in home
+    assert 'data-reveal-stagger' in home
     assert 'rotateX(12deg)' in css
     assert 'prefers-reduced-motion: reduce' in css
     assert '(pointer: coarse)' in css
     assert 'function createTerrain' in script
+    assert 'document.visibilityState' in script
+    assert 'IntersectionObserver' in script
+    assert 'ambientTime' in script
     assert 'document.querySelectorAll(".magnetic")' in script

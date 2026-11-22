@@ -56,7 +56,7 @@ if (filterGroup && projectCards.length) {
   });
 }
 
-const revealElements = document.querySelectorAll(".reveal, .image-reveal, [data-3d-reveal]");
+const revealElements = document.querySelectorAll(".reveal, .image-reveal, [data-3d-reveal], [data-reveal-stagger]");
 if (reducedMotion || !("IntersectionObserver" in window)) {
   revealElements.forEach((element) => element.classList.add("is-visible"));
 } else {
@@ -76,10 +76,14 @@ function createTerrain(canvas, visual) {
   if (!context) return null;
 
   visual.classList.add("has-3d");
+  const ambientMotion = !reducedMotion && !coarsePointer;
   let width = 0;
   let height = 0;
   let pixelRatio = 1;
   let frame = 0;
+  let lastFrame = 0;
+  let ambientTime = 0;
+  let inView = true;
   let yaw = -0.48;
   let pitch = 0.94;
   let targetYaw = yaw;
@@ -91,7 +95,8 @@ function createTerrain(canvas, visual) {
   const surfaceHeight = (x, y) => {
     const peak = Math.exp(-(((x - 0.32) ** 2) * 1.25 + ((y + 0.2) ** 2) * 1.6) / 0.58);
     const ridge = Math.sin(x * 2.15 + y * 0.42) * Math.cos(y * 2.25 - x * 0.3);
-    return peak * 0.98 + ridge * 0.24;
+    const drift = ambientMotion ? Math.sin(x * 1.55 + y * 0.8 + ambientTime * 0.22) * 0.006 : 0;
+    return peak * 0.98 + ridge * 0.24 + drift;
   };
 
   function resize() {
@@ -197,12 +202,23 @@ function createTerrain(canvas, visual) {
     context.fill();
   }
 
-  function animate() {
+  function animate(timestamp) {
     frame = 0;
-    yaw += (targetYaw - yaw) * 0.11;
-    pitch += (targetPitch - pitch) * 0.11;
+    const delta = lastFrame ? Math.min((timestamp - lastFrame) / 1000, 0.05) : 0;
+    lastFrame = timestamp;
+    if (ambientMotion) ambientTime += delta;
+    const ambientYaw = ambientMotion ? Math.sin(ambientTime * 0.17) * 0.008 : 0;
+    const ambientPitch = ambientMotion ? Math.sin(ambientTime * 0.13 + 1.2) * 0.004 : 0;
+    yaw += (targetYaw + ambientYaw - yaw) * 0.07;
+    pitch += (targetPitch + ambientPitch - pitch) * 0.07;
     render();
-    if (Math.abs(targetYaw - yaw) + Math.abs(targetPitch - pitch) > 0.002) {
+    if (ambientMotion && inView && document.visibilityState !== "hidden") {
+      frame = window.requestAnimationFrame(animate);
+    }
+  }
+
+  function requestFrame() {
+    if (!frame && inView && document.visibilityState !== "hidden") {
       frame = window.requestAnimationFrame(animate);
     }
   }
@@ -210,7 +226,7 @@ function createTerrain(canvas, visual) {
   function setPointer(x, y) {
     targetYaw = -0.48 + x * 0.34;
     targetPitch = 0.94 - y * 0.18;
-    if (!frame) frame = window.requestAnimationFrame(animate);
+    requestFrame();
   }
 
   if ("ResizeObserver" in window) {
@@ -219,7 +235,31 @@ function createTerrain(canvas, visual) {
   } else {
     window.addEventListener("resize", resize, { passive: true });
   }
+  if ("IntersectionObserver" in window) {
+    const visibilityObserver = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      if (inView) {
+        lastFrame = 0;
+        requestFrame();
+      } else if (frame) {
+        window.cancelAnimationFrame(frame);
+        frame = 0;
+        lastFrame = 0;
+      }
+    }, { rootMargin: "100px 0px" });
+    visibilityObserver.observe(canvas);
+  }
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") {
+      if (frame) window.cancelAnimationFrame(frame);
+      frame = 0;
+      lastFrame = 0;
+    } else {
+      requestFrame();
+    }
+  });
   resize();
+  requestFrame();
   return { setPointer };
 }
 
@@ -303,6 +343,11 @@ if (!reducedMotion && !coarsePointer) {
         element.style.setProperty("--tilt-y", `${(x * strength * 2).toFixed(2)}deg`);
         element.style.setProperty("--tilt-spot-x", `${((x + 0.5) * 100).toFixed(1)}%`);
         element.style.setProperty("--tilt-spot-y", `${((y + 0.5) * 100).toFixed(1)}%`);
+        const depthLayer = element.querySelector(".project-card__media img, .project-card__placeholder, .work-empty__mark");
+        if (depthLayer) {
+          depthLayer.style.setProperty("--depth-x", `${(x * 10).toFixed(1)}px`);
+          depthLayer.style.setProperty("--depth-y", `${(y * 8).toFixed(1)}px`);
+        }
         element.classList.add("is-tilted");
         frame = 0;
       });
@@ -310,6 +355,11 @@ if (!reducedMotion && !coarsePointer) {
     element.addEventListener("pointerleave", () => {
       element.style.setProperty("--tilt-x", "0deg");
       element.style.setProperty("--tilt-y", "0deg");
+      const depthLayer = element.querySelector(".project-card__media img, .project-card__placeholder, .work-empty__mark");
+      if (depthLayer) {
+        depthLayer.style.setProperty("--depth-x", "0px");
+        depthLayer.style.setProperty("--depth-y", "0px");
+      }
       element.classList.remove("is-tilted");
     }, { passive: true });
   });

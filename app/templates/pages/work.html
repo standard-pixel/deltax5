@@ -10,11 +10,11 @@
       <button type="button" class="filter-button is-active" data-filter="all" aria-pressed="true">All work <span>{{ projects|length }}</span></button>
       {% for category in categories %}<button type="button" class="filter-button" data-filter="{{ category|lower }}" aria-pressed="false">{{ category }}</button>{% endfor %}
     </div>
-    <div class="project-grid project-grid--work" data-project-grid>
+    <div class="project-grid project-grid--work" data-project-grid data-reveal-stagger>
       {% for project in projects %}{% include "components/project_card.html" %}{% endfor %}
     </div>
   {% else %}
-    <div class="work-empty work-empty--large reveal">
+    <div class="work-empty work-empty--large reveal" data-reveal-stagger>
       <span class="work-empty__index">ARCHIVE / 00</span>
       <div class="work-empty__mark" aria-hidden="true"><span></span><span></span><span></span></div>
       <div><p class="eyebrow">The archive is taking shape</p><h2>Nothing staged.<br><em>Nothing invented.</em></h2><p>Real projects will be added here when their work and imagery are ready to share.</p></div>

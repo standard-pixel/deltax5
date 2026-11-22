@@ -33,7 +33,7 @@
 
 <section class="intro section-pad">
   <div class="section-kicker"><span>01</span><span class="section-kicker__line"></span><span>What we do</span></div>
-  <div class="intro__body reveal">
+  <div class="intro__body reveal" data-reveal-stagger>
     <h2>Thoughtful visuals.<br><em>Made to move you.</em></h2>
     <div class="intro__aside">
       <p>From a sharp social edit to a visual identity in motion, every detail has a job. DELTAX5 brings creative direction and practical digital craft into one focused practice.</p>
@@ -48,11 +48,11 @@
     <a class="text-link" href="{{ url_for('pages.work') }}">View all work <span aria-hidden="true">↗</span></a>
   </div>
   {% if projects %}
-    <div class="project-grid project-grid--home">
+    <div class="project-grid project-grid--home" data-reveal-stagger>
       {% for project in projects %}{% include "components/project_card.html" %}{% endfor %}
     </div>
   {% else %}
-    <div class="work-empty reveal" data-tilt="2.4">
+    <div class="work-empty reveal" data-tilt="2.4" data-reveal-stagger>
       <span class="work-empty__index">D5 / WORK</span>
       <div class="work-empty__mark" aria-hidden="true"><span></span><span></span><span></span></div>
       <div><p class="eyebrow">Portfolio in progress</p><h3>Good work takes shape.</h3><p>Selected projects will appear here as they are ready to share.</p></div>
@@ -68,7 +68,7 @@
     <p>Services grounded in current tools, with new capabilities developing alongside the practice.</p>
     <a class="button button--outline magnetic" href="{{ url_for('pages.services') }}">Explore services <span aria-hidden="true">↗</span></a>
   </div>
-  <div class="service-lines">
+  <div class="service-lines" data-reveal-stagger>
     {% for service in services if service.status == 'available' %}
       <a class="service-line magnetic" href="{{ url_for('contact.contact') }}">
         <span class="service-line__number">0{{ loop.index }}</span>
