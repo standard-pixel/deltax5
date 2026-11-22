@@ -82,6 +82,12 @@ python -m pytest
 
 The suite checks public routes, SEO endpoints, security headers, CSRF, form validation, non-delivery when SMTP is missing, and successful delivery handling with a mocked mail service.
 
+## Render deployment
+
+The root `render.yaml` Blueprint defines a free Flask web service and a free Key Value instance for shared rate limits. In Render, connect GitHub, select `standard-pixel/deltax5`, and create a Blueprint from this repository. Render supplies the service URL through `RENDER_EXTERNAL_URL`; `SITE_URL` can override it. The robots policy stays closed to crawlers until `ROBOTS_ALLOW_CRAWLING` is explicitly enabled.
+
+Render free web services sleep after 15 minutes without inbound traffic, and the free Key Value store is ephemeral. This setup is suitable for a public preview; it is not a reliable always-on production tier. The enquiry form also requires SMTP environment variables before it can send email. Until then it will report that the enquiry was not sent. Add SMTP credentials only in Render’s environment settings, never in this repository.
+
 ## Production deployment
 
 Use a production WSGI server, terminate HTTPS at the host or reverse proxy, and configure the variables above in the host’s secret manager. Do not use `python run.py` or Flask debug mode as the production server.

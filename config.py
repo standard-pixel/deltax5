@@ -21,7 +21,11 @@ def _as_bool(value: str | None, default: bool = False) -> bool:
 class Config:
     APP_ENV = os.getenv("APP_ENV", "development").strip().lower()
     SECRET_KEY = os.getenv("FLASK_SECRET_KEY") or secrets.token_urlsafe(48)
-    SITE_URL = os.getenv("SITE_URL", "http://127.0.0.1:5000").rstrip("/")
+    SITE_URL = (
+        os.getenv("SITE_URL")
+        or os.getenv("RENDER_EXTERNAL_URL")
+        or "http://127.0.0.1:5000"
+    ).rstrip("/")
     ROBOTS_ALLOW_CRAWLING = _as_bool(os.getenv("ROBOTS_ALLOW_CRAWLING"), default=False)
     MAX_CONTENT_LENGTH = 32 * 1024
 
