@@ -53,7 +53,7 @@ def create_app(test_config: dict | None = None) -> Flask:
         return {
             "current_year": datetime.now(timezone.utc).year,
             "site_url": site_url,
-            "brand_email": "iantaylor@gmail.com",
+            "brand_email": "tellahian@gmail.com",
             "brand_phone_display": "+254 769 706 921",
             "brand_phone_e164": "+254769706921",
             "whatsapp_url": "https://wa.me/254769706921",
@@ -64,7 +64,7 @@ def create_app(test_config: dict | None = None) -> Flask:
                 "@type": "Organization",
                 "name": "DELTAX5",
                 "url": site_url,
-                "email": "iantaylor@gmail.com",
+                "email": "tellahian@gmail.com",
                 "telephone": "+254769706921",
                 "description": (
                     "DELTAX5 is an independent creative identity for video editing, "
@@ -73,7 +73,7 @@ def create_app(test_config: dict | None = None) -> Flask:
                 "contactPoint": {
                     "@type": "ContactPoint",
                     "contactType": "project enquiries",
-                    "email": "iantaylor@gmail.com",
+                    "email": "tellahian@gmail.com",
                     "telephone": "+254769706921",
                 },
             },

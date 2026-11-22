@@ -56,7 +56,7 @@ if (filterGroup && projectCards.length) {
   });
 }
 
-const revealElements = document.querySelectorAll(".reveal, .image-reveal");
+const revealElements = document.querySelectorAll(".reveal, .image-reveal, [data-3d-reveal]");
 if (reducedMotion || !("IntersectionObserver" in window)) {
   revealElements.forEach((element) => element.classList.add("is-visible"));
 } else {

@@ -42,7 +42,7 @@ class Config:
     MAIL_USERNAME = os.getenv("MAIL_USERNAME", "").strip()
     MAIL_PASSWORD = os.getenv("MAIL_PASSWORD", "")
     MAIL_FROM = os.getenv("MAIL_FROM", "").strip()
-    MAIL_TO = os.getenv("MAIL_TO", "iantaylor@gmail.com").strip()
+    MAIL_TO = os.getenv("MAIL_TO", "tellahian@gmail.com").strip()
     MAIL_TIMEOUT = 12
 
     RATELIMIT_STORAGE_URI = os.getenv("RATELIMIT_STORAGE_URI", "memory://").strip()

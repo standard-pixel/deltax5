@@ -120,6 +120,7 @@ h1 em, h2 em, h3 em { color: var(--brass); font-family: var(--display); font-wei
 .text-link:hover { color: var(--brass); }
 .text-link:hover span { transform: translate(2px,-2px); }
 .hero__visual { position: absolute; top: 10%; right: 3%; bottom: 8%; width: 57%; overflow: visible; perspective: 1050px; transform-style: preserve-3d; transform: perspective(1050px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); transition: transform 520ms var(--ease-out); }
+.hero__depth-reveal { position: absolute; inset: 0; transform-style: preserve-3d; }
 .topography-art { position: absolute; inset: 1% -9% 0 1%; width: 111%; height: 100%; object-fit: contain; opacity: .87; mix-blend-mode: screen; transform: translate3d(var(--mx, 0), var(--my, 0), 0) translateZ(8px) scale(1.02); transition: transform 480ms var(--ease-out), opacity 400ms; }
 .topography-3d { position: absolute; z-index: 2; inset: 1% 0 0 2%; width: 98%; height: 98%; pointer-events: none; opacity: .96; mix-blend-mode: screen; transform: translateZ(38px); transform-style: preserve-3d; }
 .hero__visual.has-3d .topography-art { opacity: .31; }
@@ -342,6 +343,30 @@ h1 em, h2 em, h3 em { color: var(--brass); font-family: var(--display); font-wei
 .image-reveal { clip-path: inset(0 0 0 0); }
 .js .image-reveal { clip-path: inset(0 0 100% 0); transition: clip-path 850ms var(--ease-out); }
 .js .is-visible .image-reveal, .js .image-reveal.is-visible { clip-path: inset(0); }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .js .hero__depth-reveal[data-3d-reveal] {
+    clip-path: inset(0 0 62% 0);
+    opacity: 0;
+    transform: perspective(1200px) rotateX(12deg) translate3d(0, 1.35rem, -72px) scale(.95);
+    transform-origin: 50% 58%;
+    transition: clip-path 1050ms var(--ease-out), opacity 640ms ease, transform 1050ms var(--ease-out);
+  }
+  .js .hero__depth-reveal[data-3d-reveal].is-visible {
+    clip-path: inset(0);
+    opacity: 1;
+    transform: perspective(1200px) rotateX(0) translate3d(0, 0, 0) scale(1);
+  }
+  .js .image-reveal {
+    opacity: .78;
+    transform: perspective(1000px) rotateX(9deg) translate3d(0, 14px, -24px) scale(.975);
+    transform-origin: center top;
+    transition: clip-path 850ms var(--ease-out), opacity 850ms var(--ease-out), transform 950ms var(--ease-out);
+  }
+  .js .is-visible .image-reveal, .js .image-reveal.is-visible {
+    opacity: 1;
+    transform: perspective(1000px) rotateX(0) translate3d(0, 0, 0) scale(1);
+  }
+}
 .magnetic { position: relative; will-change: transform; --mag-glow: 0; background-image: radial-gradient(circle at var(--mag-spot-x, 50%) var(--mag-spot-y, 50%), rgba(194,139,75,var(--mag-glow)), transparent 48%); transition: transform 360ms var(--ease-spring), color 180ms, background-color 180ms, border-color 180ms; }
 .magnetic:hover { --mag-glow: .14; }
 .button.magnetic:hover, .nav-contact.magnetic:hover, .service-line.magnetic:hover { background-image: radial-gradient(circle at var(--mag-spot-x, 50%) var(--mag-spot-y, 50%), rgba(194,139,75,var(--mag-glow)), transparent 48%); }
@@ -494,6 +519,6 @@ h1 em, h2 em, h3 em { color: var(--brass); font-family: var(--display); font-wei
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-  .js .reveal, .js .image-reveal { opacity: 1; clip-path: none; transform: none; }
+  .js .reveal, .js .image-reveal, .js .hero__depth-reveal[data-3d-reveal] { opacity: 1; clip-path: none; transform: none; }
   .magnetic, [data-tilt], .hero__glass { transform: none !important; }
 }

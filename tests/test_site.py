@@ -40,7 +40,7 @@ def test_services_only_offer_bookable_services_in_form(client):
 
 def test_contact_has_real_contact_links(client):
     page = client.get("/contact").get_data(as_text=True)
-    assert "mailto:iantaylor@gmail.com" in page
+    assert "mailto:tellahian@gmail.com" in page
     assert "tel:+254769706921" in page
     assert "https://wa.me/254769706921" in page
 
@@ -148,7 +148,9 @@ def test_3d_and_magnetic_effects_have_fallbacks(client):
     css = client.get("/static/css/site.css").get_data(as_text=True)
     script = client.get("/static/js/site.js").get_data(as_text=True)
     assert 'data-topography-canvas' in home
+    assert 'data-3d-reveal' in home
     assert 'data-tilt="2"' in home
+    assert 'rotateX(12deg)' in css
     assert 'prefers-reduced-motion: reduce' in css
     assert '(pointer: coarse)' in css
     assert 'function createTerrain' in script

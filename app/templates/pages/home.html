@@ -19,8 +19,10 @@
   </div>
   <div class="hero__visual" data-tilt="2" aria-hidden="true">
     <div class="hero__visual-index">D5 / 01</div>
-    <img class="topography-art" src="{{ url_for('static', filename='images/topography.svg') }}" alt="" fetchpriority="high">
-    <canvas class="topography-3d" data-topography-canvas aria-hidden="true"></canvas>
+    <div class="hero__depth-reveal" data-3d-reveal>
+      <img class="topography-art" src="{{ url_for('static', filename='images/topography.svg') }}" alt="" fetchpriority="high">
+      <canvas class="topography-3d" data-topography-canvas aria-hidden="true"></canvas>
+    </div>
     <div class="hero__orbit hero__orbit--one"></div>
     <div class="hero__orbit hero__orbit--two"></div>
     <div class="hero__visual-caption"><span>FORM / MOTION / IMAGE</span><span>001 — 005</span></div>
