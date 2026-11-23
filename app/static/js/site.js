@@ -5,6 +5,15 @@ document.documentElement.classList.add("js");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
 
+const siteHeader = document.querySelector("[data-header]");
+if (siteHeader) {
+  const updateHeaderSurface = () => {
+    siteHeader.classList.toggle("is-scrolled", window.scrollY > 24);
+  };
+  updateHeaderSurface();
+  window.addEventListener("scroll", updateHeaderSurface, { passive: true });
+}
+
 // This branded intro runs after Flask has served the page; it cannot cover Render's earlier cold-start screen.
 const siteLoader = document.querySelector("[data-site-loader]");
 if (siteLoader) {

@@ -72,10 +72,13 @@ button { color: inherit; }
 
 /* Header */
 .site-header {
-  position: absolute; z-index: 30; top: 0; left: 0; display: flex; align-items: center;
+  position: fixed; z-index: 30; top: 0; left: 0; display: flex; align-items: center;
   justify-content: space-between; width: 100%; max-width: 100%; height: 6.2rem;
-  padding: 0 var(--gutter); border-bottom: 1px solid rgba(196,218,234,.1);
+  padding: 0 var(--gutter); border-bottom: 1px solid rgba(196,218,234,.08);
+  background-color: transparent; background-image: linear-gradient(180deg, rgba(4,6,10,.74), rgba(4,6,10,0));
+  transition: background-color 260ms ease, border-color 260ms ease, box-shadow 260ms ease;
 }
+.site-header.is-scrolled { border-bottom-color: rgba(196,218,234,.14); background-color: rgba(4,6,10,.86); box-shadow: 0 1rem 2rem rgba(0,0,0,.18); backdrop-filter: blur(18px) saturate(1.35); -webkit-backdrop-filter: blur(18px) saturate(1.35); }
 .wordmark { display: inline-flex; flex-direction: column; gap: 0.22rem; width: max-content; }
 .wordmark__name { font-size: 1.02rem; font-weight: 750; letter-spacing: 0.13em; line-height: 1; }
 .wordmark__name span { color: var(--rose); }
@@ -619,6 +622,7 @@ h1 em, h2 em, h3 em { color: var(--brass); font-family: var(--display); font-wei
 .site-footer { background: #030509; }
 
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header.is-scrolled { background-color: rgba(4,6,10,.97); }
   .hero__glass { background: rgba(11,25,39,.94); }
 }
 @media (max-width: 760px) {
