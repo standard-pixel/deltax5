@@ -1,3 +1,4 @@
+import re
 from xml.etree import ElementTree
 
 import pytest
@@ -24,7 +25,21 @@ def test_home_has_brand_and_no_project_claims(client):
     assert response.status_code == 200
     assert "DELTAX5" in page
     assert "Portfolio in progress" in page
+    assert re.search(
+        r'<a class="magnetic magnetic--nav" href="/" aria-current="page"\s*>Home</a>',
+        page,
+    )
+    assert 'data-site-loader' in page
     assert "Testimonial" not in page
+
+
+@pytest.mark.parametrize("path", ["/work", "/services", "/about", "/contact"])
+def test_primary_navigation_always_offers_a_home_route(client, path):
+    page = client.get(path).get_data(as_text=True)
+    assert re.search(
+        r'<a class="magnetic magnetic--nav" href="/"(?: aria-current="page")?\s*>Home</a>',
+        page,
+    )
 
 
 def test_services_only_offer_bookable_services_in_form(client):
@@ -138,8 +153,8 @@ def test_small_text_palette_meets_wcag_aa_on_dark_surfaces():
         light, dark = sorted((luminance(foreground), luminance(background)), reverse=True)
         return (light + 0.05) / (dark + 0.05)
 
-    muted = "#85827b"
-    for surface in ("#090b0d", "#0e1114", "#13171b"):
+    muted = "#8497a8"
+    for surface in ("#04060a", "#090f16", "#101822"):
         assert ratio(muted, surface) >= 4.5
 
 

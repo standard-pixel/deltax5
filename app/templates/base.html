@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#090b0d">
+  <meta name="theme-color" content="#04060a">
   <meta name="description" content="{{ description|default('An independent creative identity for video editing, visual design and digital creative production.') }}">
   <link rel="canonical" href="{{ site_url }}{{ request.path }}">
-  <link rel="icon" href="{{ url_for('static', filename='images/favicon.svg') }}" type="image/svg+xml">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='images/favicon.svg', v='3') }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css', v='3') }}">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="DELTAX5">
   <meta property="og:title" content="{{ title|default('DELTAX5 — Create beyond the ordinary') }}">
   <meta property="og:description" content="{{ description|default('An independent creative identity for video editing, visual design and digital creative production.') }}">
   <meta property="og:url" content="{{ site_url }}{{ request.path }}">
-  <meta property="og:image" content="{{ site_url }}{{ url_for('static', filename='images/og-image.svg') }}">
+  <meta property="og:image" content="{{ site_url }}{{ url_for('static', filename='images/og-image.svg', v='3') }}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{ title|default('DELTAX5 — Create beyond the ordinary') }}">
   <meta name="twitter:description" content="{{ description|default('An independent creative identity for video editing, visual design and digital creative production.') }}">
@@ -21,6 +21,12 @@
   <script type="application/ld+json" nonce="{{ csp_nonce }}">{{ structured_data|tojson }}</script>
 </head>
 <body>
+  <div class="site-loader" data-site-loader aria-hidden="true">
+    <div class="site-loader__mark" aria-hidden="true"><span></span><span></span><span></span></div>
+    <p class="site-loader__brand">DELTAX<span>5</span></p>
+    <p class="site-loader__label">Visual system / initializing</p>
+    <div class="site-loader__track" aria-hidden="true"><span></span></div>
+  </div>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header" data-header>
     <a class="wordmark" href="{{ url_for('pages.home') }}" aria-label="DELTAX5 home">
@@ -32,10 +38,11 @@
       <span class="menu-toggle__icon" aria-hidden="true"><i></i><i></i></span>
     </button>
     <nav class="primary-nav" id="primary-nav" aria-label="Primary navigation" data-primary-nav>
-      <a href="{{ url_for('pages.work') }}" {% if request.endpoint in ['pages.work', 'pages.project_detail'] %}aria-current="page"{% endif %}>Work</a>
-      <a href="{{ url_for('pages.services') }}" {% if request.endpoint == 'pages.services' %}aria-current="page"{% endif %}>Services</a>
-      <a href="{{ url_for('pages.about') }}" {% if request.endpoint == 'pages.about' %}aria-current="page"{% endif %}>About</a>
-      <a class="nav-contact magnetic" href="{{ url_for('contact.contact') }}" {% if request.endpoint == 'contact.contact' %}aria-current="page"{% endif %}>Start a project <span aria-hidden="true">↗</span></a>
+      <a class="magnetic magnetic--nav" href="{{ url_for('pages.home') }}" {% if request.endpoint == 'pages.home' %}aria-current="page"{% endif %}>Home</a>
+      <a class="magnetic magnetic--nav" href="{{ url_for('pages.work') }}" {% if request.endpoint in ['pages.work', 'pages.project_detail'] %}aria-current="page"{% endif %}>Work</a>
+      <a class="magnetic magnetic--nav" href="{{ url_for('pages.services') }}" {% if request.endpoint == 'pages.services' %}aria-current="page"{% endif %}>Services</a>
+      <a class="magnetic magnetic--nav" href="{{ url_for('pages.about') }}" {% if request.endpoint == 'pages.about' %}aria-current="page"{% endif %}>About</a>
+      <a class="nav-contact magnetic magnetic--nav" href="{{ url_for('contact.contact') }}" {% if request.endpoint == 'contact.contact' %}aria-current="page"{% endif %}>Start a project <span aria-hidden="true">↗</span></a>
     </nav>
   </header>
 
@@ -58,6 +65,7 @@
       </div>
       <nav class="footer-nav" aria-label="Footer navigation">
         <span class="eyebrow">Explore</span>
+        <a href="{{ url_for('pages.home') }}">Home</a>
         <a href="{{ url_for('pages.work') }}">Work</a>
         <a href="{{ url_for('pages.services') }}">Services</a>
         <a href="{{ url_for('pages.about') }}">About</a>
@@ -70,6 +78,6 @@
       <a href="#main">Back to top ↑</a>
     </div>
   </footer>
-  <script src="{{ url_for('static', filename='js/site.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/site.js', v='3') }}" defer></script>
 </body>
 </html>

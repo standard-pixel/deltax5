@@ -5,6 +5,33 @@ document.documentElement.classList.add("js");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
 
+// This branded intro runs after Flask has served the page; it cannot cover Render's earlier cold-start screen.
+const siteLoader = document.querySelector("[data-site-loader]");
+if (siteLoader) {
+  let alreadyShown = false;
+  try { alreadyShown = sessionStorage.getItem("deltax5-intro-shown") === "1"; } catch (_error) { /* storage is optional */ }
+  if (alreadyShown) {
+    siteLoader.setAttribute("hidden", "");
+  } else {
+    const loaderStarted = performance.now();
+    let closing = false;
+    siteLoader.classList.add("is-active");
+    const closeLoader = () => {
+      if (closing) return;
+      closing = true;
+      const minimumTime = reducedMotion ? 160 : 980;
+      const remaining = Math.max(0, minimumTime - (performance.now() - loaderStarted));
+      window.setTimeout(() => {
+        siteLoader.classList.remove("is-active");
+        window.setTimeout(() => siteLoader.setAttribute("hidden", ""), 480);
+        try { sessionStorage.setItem("deltax5-intro-shown", "1"); } catch (_error) { /* storage is optional */ }
+      }, remaining);
+    };
+    window.addEventListener("load", closeLoader, { once: true });
+    window.setTimeout(closeLoader, 3200);
+  }
+}
+
 const menuButton = document.querySelector("[data-menu-toggle]");
 const primaryNav = document.querySelector("[data-primary-nav]");
 
@@ -145,16 +172,16 @@ function createTerrain(canvas, visual) {
     perimeter.forEach(([x, y], index) => index === 0 ? context.moveTo(x, y) : context.lineTo(x, y));
     context.closePath();
     const terrainFill = context.createLinearGradient(0, height * 0.28, 0, height * 0.88);
-    terrainFill.addColorStop(0, "rgba(196, 139, 75, 0.12)");
-    terrainFill.addColorStop(0.55, "rgba(113, 71, 43, 0.055)");
-    terrainFill.addColorStop(1, "rgba(9, 11, 13, 0.015)");
+    terrainFill.addColorStop(0, "rgba(0, 123, 167, 0.16)");
+    terrainFill.addColorStop(0.55, "rgba(0, 54, 82, 0.065)");
+    terrainFill.addColorStop(1, "rgba(4, 6, 10, 0.015)");
     context.fillStyle = terrainFill;
     context.fill();
 
     const [peakX, peakY] = project(0.32, -0.2, surfaceHeight(0.32, -0.2));
     const peakLight = context.createRadialGradient(peakX, peakY, 1, peakX, peakY, Math.min(width, height) * 0.24);
-    peakLight.addColorStop(0, "rgba(236, 197, 132, 0.12)");
-    peakLight.addColorStop(1, "rgba(236, 197, 132, 0)");
+    peakLight.addColorStop(0, "rgba(255, 45, 149, 0.15)");
+    peakLight.addColorStop(1, "rgba(0, 123, 167, 0)");
     context.fillStyle = peakLight;
     context.fillRect(0, 0, width, height);
 
@@ -163,7 +190,10 @@ function createTerrain(canvas, visual) {
       context.beginPath();
       points[row].forEach(([x, y], index) => index === 0 ? context.moveTo(x, y) : context.lineTo(x, y));
       context.lineWidth = row % 4 === 0 ? 1.05 : 0.68;
-      context.strokeStyle = `rgba(220, 180, 116, ${0.48 - distance * 0.16})`;
+      const contourAlpha = 0.48 - distance * 0.16;
+      context.strokeStyle = row % 7 === 0
+        ? `rgba(255, 45, 149, ${contourAlpha.toFixed(2)})`
+        : `rgba(52, 201, 255, ${contourAlpha.toFixed(2)})`;
       context.stroke();
     }
 
@@ -180,7 +210,7 @@ function createTerrain(canvas, visual) {
       }
       context.closePath();
       context.lineWidth = ring === 0 ? 1.18 : 0.82;
-      context.strokeStyle = ring % 2 === 0 ? "rgba(236, 197, 132, 0.48)" : "rgba(194, 139, 75, 0.39)";
+      context.strokeStyle = ring % 2 === 0 ? "rgba(255, 45, 149, 0.52)" : "rgba(52, 201, 255, 0.44)";
       context.stroke();
     }
 
@@ -192,13 +222,13 @@ function createTerrain(canvas, visual) {
         else context.lineTo(x, y);
       }
       context.lineWidth = column % 5 === 0 ? 0.9 : 0.58;
-      context.strokeStyle = column % 5 === 0 ? "rgba(231, 198, 145, 0.35)" : "rgba(194, 139, 75, 0.22)";
+      context.strokeStyle = column % 5 === 0 ? "rgba(52, 201, 255, 0.38)" : "rgba(0, 123, 167, 0.28)";
       context.stroke();
     }
 
     context.beginPath();
     context.arc(peakX, peakY, 2.4, 0, Math.PI * 2);
-    context.fillStyle = "rgba(239, 207, 151, 0.82)";
+    context.fillStyle = "rgba(235, 249, 255, 0.9)";
     context.fill();
   }
 
@@ -310,7 +340,7 @@ if (topography) {
 if (!reducedMotion && !coarsePointer) {
   document.querySelectorAll(".magnetic").forEach((element) => {
     let frame = 0;
-    const strength = element.classList.contains("button") ? 8 : element.classList.contains("nav-contact") ? 4 : 5;
+    const strength = element.classList.contains("magnetic--nav") ? 3.5 : element.classList.contains("button") ? 8 : 5;
     element.addEventListener("pointermove", (event) => {
       if (frame) return;
       frame = window.requestAnimationFrame(() => {

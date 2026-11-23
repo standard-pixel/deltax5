@@ -1,18 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 800" fill="none" role="img" aria-labelledby="title desc">
   <title id="title">DELTAX5 topographic identity artwork</title>
-  <desc id="desc">Layered topographic contour lines in warm metallic tones.</desc>
+  <desc id="desc">Layered topographic contour lines in electric cerulean blue and neon rose.</desc>
   <defs>
-    <radialGradient id="amber-wash" cx="0" cy="0" r="1" gradientTransform="matrix(475 0 0 425 520 367)" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#d4a15e" stop-opacity=".24"/><stop offset=".55" stop-color="#9a6339" stop-opacity=".09"/><stop offset="1" stop-color="#090b0d" stop-opacity="0"/>
+    <radialGradient id="electric-wash" cx="0" cy="0" r="1" gradientTransform="matrix(475 0 0 425 520 367)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#007ba7" stop-opacity=".24"/><stop offset=".55" stop-color="#073e5b" stop-opacity=".09"/><stop offset="1" stop-color="#04060a" stop-opacity="0"/>
     </radialGradient>
     <linearGradient id="contour" x1="107" x2="773" y1="127" y2="674" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#efd29d" stop-opacity=".65"/><stop offset=".48" stop-color="#c68e51" stop-opacity=".5"/><stop offset="1" stop-color="#805332" stop-opacity=".14"/>
+      <stop stop-color="#6ee0ff" stop-opacity=".65"/><stop offset=".48" stop-color="#087ba7" stop-opacity=".5"/><stop offset="1" stop-color="#ff2d95" stop-opacity=".14"/>
     </linearGradient>
     <filter id="contour-soft" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
       <feGaussianBlur stdDeviation=".25"/>
     </filter>
   </defs>
-  <ellipse cx="520" cy="370" fill="url(#amber-wash)" rx="440" ry="395"/>
+  <ellipse cx="520" cy="370" fill="url(#electric-wash)" rx="440" ry="395"/>
   <g stroke="url(#contour)" stroke-width="1.05" opacity=".72" filter="url(#contour-soft)">
     <path d="M100 125c75-59 174-71 264-34 91 37 131 113 224 120 65 5 127-30 196-16 62 13 106 67 124 128"/>
     <path d="M77 150c82-69 190-84 290-42 92 38 137 117 228 126 65 6 129-33 201-18 68 14 119 72 136 143"/>
@@ -30,7 +30,7 @@
     <path d="M179 629c49-194 264-311 493-237 63 21 105 137 171 224 102 134 213-32 289 11 95 54 136 152 84 292"/>
     <path d="M227 666c31-200 253-332 495-260 54 16 93 134 157 234 104 158 220-24 290 21 91 58 124 156 65 296"/>
   </g>
-  <g stroke="#efd9ad" stroke-width=".8" opacity=".23">
+  <g stroke="#ff58ad" stroke-width=".8" opacity=".23">
     <path d="M367 173c75-38 155-39 219-2 62 36 87 94 151 107 44 9 90-12 137 7"/>
     <path d="M325 230c83-47 173-51 244-10 63 36 94 96 155 113 48 14 98-11 150 12"/>
     <path d="M293 292c89-56 190-64 269-20 63 35 99 97 159 119 53 20 107-8 164 20"/>
@@ -39,7 +39,7 @@
     <path d="M279 506c85-79 207-105 301-56 60 32 94 100 151 147 69 56 140 19 202 65"/>
     <path d="M308 581c73-83 200-119 299-71 56 27 87 97 143 155 72 74 149 36 208 87"/>
   </g>
-  <circle cx="542" cy="378" r="6" fill="#e1bd82" opacity=".8"/>
-  <circle cx="542" cy="378" r="16" stroke="#e1bd82" stroke-opacity=".42"/>
-  <circle cx="542" cy="378" r="28" stroke="#e1bd82" stroke-opacity=".2"/>
+  <circle cx="542" cy="378" r="6" fill="#65d7ff" opacity=".8"/>
+  <circle cx="542" cy="378" r="16" stroke="#65d7ff" stroke-opacity=".42"/>
+  <circle cx="542" cy="378" r="28" stroke="#65d7ff" stroke-opacity=".2"/>
 </svg>
